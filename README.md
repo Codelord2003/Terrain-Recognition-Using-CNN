@@ -12,6 +12,10 @@ TerrainNet is an advanced terrain analysis software designed specifically for de
 
 - **Backend Integration:** Developed using Flask and integrated with TensorFlow, TerrainNet's backend ensures smooth communication between the user interface and the CNN model, enabling real-time terrain analysis.
 
+
+![image](https://github.com/Codelord2003/Terrain-Recognition-Using-CNN/assets/95679005/687a401f-8faa-448b-8771-9024648c7ab8)
+
+
 **Usage:**
 
 1. Clone this repository to your local machine.
