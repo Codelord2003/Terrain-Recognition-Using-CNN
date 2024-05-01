@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Terrain Recognition</title>
+    <style>
+        body {
+            background-color: hwb(198 0% 0%); 
+        }
+
+        
+        .center-container {
+            text-align: center;
+            margin: 0 auto;
+            width: 50%; 
+            background-color: hsl(131, 63%, 39%); 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+
+        #uploaded_image {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%; 
+        }
+
+        #prediction {
+            font-size: 24px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="center-container">
+        <h1>Terrain Recognition using Convolutional Neural Network</h1>
+        <form method="POST" enctype="multipart/form-data" action="/upload">
+            <input type="file" name="file" accept=".jpg, .png, .jpeg">
+            <input type="submit" value="Upload">
+        </form>
+        <div id="result">
+            <img src="" alt="Uploaded Image" id="uploaded_image">
+            <p id="prediction"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const uploadedImage = document.querySelector('#uploaded_image');
+        const predictionElement = document.querySelector('#prediction');
+    
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData,
+            });
+    
+            if (response.ok) {
+                const result = await response.json();
+                if (result.prediction) {
+                    const prediction = result.prediction;
+                    predictionElement.textContent = `Predicted Terrain: ${prediction}`;
+                } else {
+                    predictionElement.textContent = `Error: ${result.error}`;
+                }
+                uploadedImage.src = URL.createObjectURL(formData.get('file'));
+            } else {
+                predictionElement.textContent = 'Error uploading the image';
+            }
+        });
+    </script>
+</body>
+</html>
